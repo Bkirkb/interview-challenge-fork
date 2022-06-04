@@ -6,8 +6,9 @@ namespace CodingChallenge.CardGame;
 
 public interface IPackOfCards : IReadOnlyCollection<ICard>
 {
-    void Shuffle();
+    IPackOfCards Shuffle();
     ICard TakeCardFromTopOfPack();
+    public List<ICard> Cards { get; set; }
 }
 
 public class PackOfCards : IPackOfCards
@@ -16,20 +17,22 @@ public class PackOfCards : IPackOfCards
     {
         Cards = cards;
     }
-    public List<ICard> Cards;
+
+    public List<ICard> Cards { get; set; }
     public int Count => Cards.Count();
     public IEnumerator<ICard> GetEnumerator() => throw new NotImplementedException();
-    public void Shuffle()
+    public IPackOfCards Shuffle()
     {
         PackOfCardsCreator creator = new();
-        PackOfCards cards = (PackOfCards)creator.Create();
         Random rand = new Random();
-        Cards = cards.OrderBy(cards_ => rand.Next()).ToList();
+        IPackOfCards cardsReturn = creator.Create();
+        this.Cards = cardsReturn.Cards.OrderBy(_ => rand.Next()).ToList();
+        return cardsReturn;
     }
     public ICard TakeCardFromTopOfPack()
     {
-        ICard topCard = (ICard)Cards.Take(1);
-        Cards.Remove(topCard);
+        ICard topCard = Cards.FirstOrDefault();
+        Cards.RemoveAt(0);
         return topCard;
     }
     IEnumerator IEnumerable.GetEnumerator() => throw new NotImplementedException();

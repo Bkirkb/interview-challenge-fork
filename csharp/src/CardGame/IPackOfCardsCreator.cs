@@ -12,6 +12,7 @@ public class PackOfCardsCreator : IPackOfCardsCreator
 {
     public IPackOfCards Create()
     {
+        
         Suit[] suits = (Suit[])Enum.GetValues(typeof(Suit));
         Value[] values = (Value[])Enum.GetValues(typeof(Value));
         List<ICard> cards = new();
@@ -24,8 +25,6 @@ public class PackOfCardsCreator : IPackOfCardsCreator
             }
         }
         PackOfCards packOfCards = new(cards);
-        Random rand = new Random();
-        packOfCards.Shuffle();
         return packOfCards;
     }
 }
