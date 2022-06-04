@@ -5,16 +5,19 @@ namespace CodingChallenge.ReversingString.Tests
     [TestFixture]
     public class ReversingStringTests
     {
-        //Possible test cases - string, empty/null string. function is always expecting a string - could change function to expect an object, so that incorrect inputs are parsed correctly.
+        
         [Test]
+        // Normal operation, check return type is string, and that the function is working as expected
         public void TestReversingString()
         {
             string input = "this should be reversed";
             string expctedResult = "desrever eb dluohs siht";
             string result = StringUtilities.Reverse(input);
+            Assert.IsInstanceOf(typeof(string), result);
             Assert.AreEqual(result, expctedResult);
         }
         [Test]
+        // Null check
         public void TestReversingStringNull()
         {
             string input = null;
@@ -23,6 +26,7 @@ namespace CodingChallenge.ReversingString.Tests
             Assert.AreEqual(result, expectedResult);
         }
         [Test]
+        // Singular string input - technically cannot be reversed, but input is valid
         public void TestReversingStringOne()
         {
             string input = "e";
